@@ -15,8 +15,8 @@ Jonas Lindeløv, 2014
 # Generic layout
 from psychopy import visual, event
 win = visual.Window()
-stimText = visual.TextStim(win, text='Welcome', color='black')
-stimText.draw()
+stim_text = visual.TextStim(win, text='Welcome', color='black')
+stim_text.draw()
 win.flip()
 event.waitKeys()
 
@@ -32,42 +32,42 @@ Exercise on changing parameters:
 # SOLUTION:
 win.close()
 win = visual.Window(color='black')  # using earlier Window
-stimText = visual.TextStim(win, text='Welcome', color='gray', height=0.2, ori=30)
-stimText.draw()
+stim_text = visual.TextStim(win, text='Welcome', color='gray', height=0.2, ori=30)
+stim_text.draw()
 win.flip()
 event.waitKeys(maxWait=5, keyList=['space', 'n', 'm'])
 
 
 # ImageStim
-stimImage = visual.ImageStim(win, image='xkcd.png')
-stimImage.setSize([1, -1], '*')  # flip vertically
-print stimImage.size  # the size of the stimulus in current units
-stimText.setPos([0, 0.6])
+stim_image = visual.ImageStim(win, image='xkcd.png')
+stim_image.setSize([1, -1], '*')  # flip vertically
+print stim_image.size  # the size of the stimulus in current units
+stim_text.setPos([0, 0.6])
 
-stimImage.draw()
-stimText.draw()
+stim_image.draw()
+stim_text.draw()
 win.flip()
 event.waitKeys()
 
 """
 Exercise on GratingStim, parameters and drawing:
-    * make a GratingStim (call it e.g. stimGrating) and show it to see what it does
+    * make a GratingStim (call it e.g. stim_grating) and show it to see what it does
     * change various parameters after it is initiated,
       e.g. make a gabor patch by setting mask to a gaussian and spatial frequency (sf) to 10
-    * show it on top of stimImage and stimText with reduced opacity
+    * show it on top of stim_image and stim_text with reduced opacity
 	  hint: to draw on top, simply draw last.
 """
 
 # SOLUTION
-stimGrating = visual.GratingStim(win)
-stimGrating.setMask('gauss')
-stimGrating.setSF(10)
-stimGrating.setPos([-0.1, -0.1])
-stimGrating.setOpacity(0.5)
+stim_grating = visual.GratingStim(win)
+stim_grating.setMask('gauss')
+stim_grating.setSF(10)
+stim_grating.setPos([-0.1, -0.1])
+stim_grating.setOpacity(0.5)
 
-stimImage.draw()
-stimText.draw()
-stimGrating.draw()
+stim_image.draw()
+stim_text.draw()
+stim_grating.draw()
 win.flip()
 event.waitKeys()
 
@@ -80,22 +80,22 @@ event.waitKeys()
 
 # Demonstrate monitor center!
 from psychopy import visual, monitors
-myMonitor = monitors.Monitor('testMonitor', width=34.3, distance=65)
-myMonitor.setSizePix([1024, 768])
+my_monitor = monitors.Monitor('testMonitor', width=34.3, distance=65)
+my_monitor.setSizePix([1024, 768])
 
 # Start a new window with degrees as default unit
 win.close()
-win = visual.Window(monitor=myMonitor, units='deg', color='black')
+win = visual.Window(monitor=my_monitor, units='deg', color='black')
 
 # In cm
-stimImage = visual.ImageStim(win, image='xkcd.png', size=[10, 10], units='cm')
-stimImage.draw()
+stim_image = visual.ImageStim(win, image='xkcd.png', size=[10, 10], units='cm')
+stim_image.draw()
 win.flip()
 event.waitKeys()
 
 # in degrees
-stimImage = visual.ImageStim(win, image='xkcd.png', size=[10, 10])
-stimImage.draw()
+stim_image = visual.ImageStim(win, image='xkcd.png', size=[10, 10])
+stim_image.draw()
 win.flip()
 event.waitKeys()
 
@@ -129,15 +129,15 @@ print ppc.deg2cm(3, 60)
 # ----------------------
 
 # Specify colors using the DKL colorspace
-stimShape1 = visual.ShapeStim(win, units='cm', size=5,
+stim_shape1 = visual.ShapeStim(win, units='cm', size=5,
     fillColorSpace='dkl', fillColor=[0, 45, 1], pos=[0, 2])
-stimShape2 = visual.ShapeStim(win, units='cm', size=5,
+stim_shape2 = visual.ShapeStim(win, units='cm', size=5,
     fillColorSpace='dkl', fillColor=[0, 0, -1], pos=[0, -2],
     vertices=[[0,0], [1,0], [1,1], [0,1]])
-stimShape2.setVertices([0.5, 0.5], '-')
+stim_shape2.setVertices([0.5, 0.5], '-')
 
-stimShape1.draw()
-stimShape2.draw()
+stim_shape1.draw()
+stim_shape2.draw()
 win.flip()
 event.waitKeys()
 
@@ -150,35 +150,35 @@ Exercise on colors:
     * make a ShapeStim and change its line and fill colors to something in DKL.
       hint: there's a "stim.set*" function for almost everything. This is true
       for ShapeStim fillcolor and linecolor as well.
-    * try changing the color of the stimImage from earlier.
+    * try changing the color of the stim_image from earlier.
 """
 
 
 # ----------------------
 # SOUNDS
-# ... are continuous so now we can use core.Clock().
+# ... are continuous so now we can use core.wait().
 # ----------------------
 
 # Psychopy sounds
 from psychopy import sound, core
-soundPygame = sound.SoundPygame('beep.wav', secs=0.1)
-soundPyo = sound.SoundPyo('beep.wav', secs=0.1)
+sound_pygame = sound.SoundPygame('beep.wav', secs=0.1)
+sound_pyo = sound.SoundPyo('beep.wav', secs=0.1)
 clock = core.Clock()
 
 # winsound
-soundWinsound = ppc.Sound('beep.wav')
+sound_winsound = ppc.Sound('beep.wav')
 
 #playing
-soundPygame.play()
+sound_pygame.play()
 core.wait(0.5)
 
-soundPyo.play()
-clock.reset()
+sound_pyo.play()
+core.wait(0.5)
 
-soundWinsound.play()
+sound_winsound.play()
 core.wait(0.5)
 
 """
 Exercise:
-   * Play around with soundPyo(), adjusting parameters etc.
+   * Play around with sound_pyo(), adjusting parameters etc.
 """

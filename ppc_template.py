@@ -129,6 +129,10 @@ textInstruct = """
  SHOW DIALOGUE AND INITIATE PSYCHOPY STIMULI
  This is computationally heavy stuff. Thus we do it in the beginning of our experiment
 """
+# Set python version explicitly for replicability before loading submodules.
+import psychopy
+psychopy.useVersion('1.82.01')
+
 # Import stuff
 import ppc
 print 'the physical diameter of the gabor patch should be', ppc.deg2cm(stimSize, monDistance), 'cm'

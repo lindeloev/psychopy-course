@@ -9,10 +9,10 @@ of the code. We're going to use print a lot when building scripts as a diagnosti
 tool. But once everything works, we remove them to avoid taking up unnecessary
 code / console space / computational resources.
 
-All code below runs in way less than 50 ms (a 20th of a second). It should
-give you and idea about just how fast python is.
+This script runs in way less than 50 ms (a 20th of a second). Base python
+is really fast!
 
-Jonas Lindeløv, 2013
+Jonas Lindeløv, 2015
 """
 
 print """
@@ -24,17 +24,17 @@ the experiment. In addition, the "print" command is very helpful for diagnosing.
 #print theBigElephant  # wouldn't work because it's undefined here
 #print globals().keys()  # pre-defined variables
 
-theBigElephant = 5  # variables can have all sorts of crazy names
-print theBigElephant  # print is your friend!
-aGoat = 'hello'
-aSparrow = aGoat + ' mister perfect'  # concatenating (or "adding") strings
+the_big_elephant = 5  # variables can have all sorts of crazy names
+print the_big_elephant  # print is your friend!
+A_GOAT = 'hello'
+aSparrow = A_GOAT + ' mister perfect'  # concatenating (or "adding") strings
 print aSparrow
 print 'hello' + ' mister perfect'
-print theBigElephant + 4
-print aGoat, aSparrow, theBigElephant + 4, ['and', 'a', 'list']
+print the_big_elephant + 4
+print A_GOAT, aSparrow, the_big_elephant + 4, ['and', 'a', 'list']
 a, b, c = 1, 2, 3
 print c, b, a
-print type(theBigElephant), type(aGoat), type([1,2,3])  # assess type of variable
+print type(the_big_elephant), type(A_GOAT), type([1,2,3])  # assess type of variable
 print bool, int, float, str, list, tuple, dict  # built-in types of variables (objects)
 print 'æøå', u'æøå'  # "u" in front shows special characters appropriately
 print 'These variables are defined now:', globals().keys()
@@ -76,10 +76,10 @@ The elements can be anything: numbers, strings, lists etc.
 We're going to use lists a lot when generating a list of conditions and trials.
 """
 # Indexing
-myList = [0, 'hello', [7,2], (1,4), {'goat': 5, 'fish': 2}]
-print myList
-print myList[0]  # why 0? Because it means "shift 0 to the right"
-print myList[0] + myList[2][1] + myList[3][0]  # 0 + 2 + 1
+my_list = [0, 'hello', [7,2], (1,4), {'goat': 5, 'fish': 2}]
+print my_list
+print my_list[0]  # why 0? Because it means "shift 0 to the right"
+print my_list[0] + my_list[2][1] + my_list[3][0]  # 0 + 2 + 1
 
 # Built-in operations
 count = range(5)  # [0, 1, 2, 3, 4]. Notice that range and index starts at zero.
@@ -117,16 +117,16 @@ Exercise on lists:
 """
 
 # SOLUTIONS:
-myList = range(11, 101)
-print myList[0], myList[-1]
-myString = 'hello world'
-print myString[0], myString[-1]
-print myList[5:15]
-print 'the mean is', sum(myList[5:15]) / 10  # or len(myList[5:15])
+my_list = range(11, 101)
+print my_list[0], my_list[-1]
+my_string = 'hello world'
+print my_string[0], my_string[-1]
+print my_list[5:15]
+print 'the mean is', sum(my_list[5:15]) / 10  # or len(my_list[5:15])
 print range(200, 267, 4)
-myStringList = ['hello', 'python', 'coder']
-myStringList += ['way', 'to', 'go!']
-print myStringList
+my_string_list = ['hello', 'python', 'coder']
+my_string_list += ['way', 'to', 'go!']
+print my_string_list
 
 var = sorted(range(10), reverse=True)
 print var.count(5)
@@ -143,22 +143,22 @@ parameters of the trial (duration, condition etc.) including the answers
 that we get while running the experiment (reaction time, keys, score etc.).
 """
 
-myDict = {'first': 2, 'second': 4, 'third': [1, 2, 3], 'fourth': 'goat'}
-print myDict  # notice that order doesn't matter
-print myDict['first']
-print myDict.keys()  # a list of keys
-print myDict.values()  # a list of values
+my_dict = {'first': 2, 'second': 4, 'third': [1, 2, 3], 'fourth': 'goat'}
+print my_dict  # notice that order doesn't matter
+print my_dict['first']
+print my_dict.keys()  # a list of keys
+print my_dict.values()  # a list of values
 
 # Modifying dictionaries
-myDict['somethingNew'] = 'a flower'  # add a key-value pair
-myDict['second'] = 99  # if key already exists, just modify value
-print myDict
+my_dict['somethingNew'] = 'a flower'  # add a key-value pair
+my_dict['second'] = 99  # if key already exists, just modify value
+print my_dict
 
 """
 Exercise on dictionaries and indexing:
     * Make two dictionaries with the keys 'condition' and 'answer' and some values
-    * Make a list called "trialList" with [dictonary1, dictionary2]
-    * Print the value of 'condition' in the second dict by indexing trialList.
+    * Make a list called "trial_list" with [dictonary1, dictionary2]
+    * Print the value of 'condition' in the second dict by indexing trial_list.
       Hint: first index the list to get the dictionary and
       then the dictionary to get the value.
     * extend each of the two dictionaries with the key 'subject' and some values
@@ -172,8 +172,8 @@ Exercise on dictionaries and indexing:
 # SOLUTIONS
 dict1 = {'condition': 'fun', 'answer': False}
 dict2 = {'condition': 'boring', 'answer': True}
-trialList = [dict1, dict2]
-print trialList[1]['condition']
+trial_list = [dict1, dict2]
+print trial_list[1]['condition']
 dict1.update({'subject': 'jonas'})
 dict2.update({'subject': 'bodil'})
 print dict(dict1.items() + dict2.items())
@@ -192,8 +192,8 @@ in which every iteration is synchronized to the monitor update.
 # for-loop
 for i in range(4):
     print 'iteration number', i
-myList = ['a', 'fancy', 'goat']
-for i, word in enumerate(myList):
+my_list = ['a', 'fancy', 'goat']
+for i, word in enumerate(my_list):
     print 'index', i, 'has the value', word
 
 # cool syntax #1: for-else
@@ -205,15 +205,15 @@ else:
 	print 'five not found'
 
 # cool syntax #2: for-list (list comprehension)
-fancyGoat = [i * 2 for i in [1, 5, 8]]
-print fancyGoat
+fancy_goat = [i * 2 for i in [1, 5, 8]]
+print fancy_goat
 
 # Generate a list of trials!
-trialList = []
+trial_list = []
 for condition in ['fun', 'meh', 'boring']:
     for duration in [2, 4, 6]:
-        trialList += [{'condition': condition, 'duration': duration}]
-print trialList
+        trial_list += [{'condition': condition, 'duration': duration}]
+print trial_list
 
 # while-loop.
 counter = 1
@@ -230,7 +230,7 @@ Exercise on lists and loops:
     * Make a for-loop over this list and print each word within the loop:
       ['just', 'looping', 'and', 'looping', 'and', 'looping']
 
-    * Now loop over trialList which we defined earlier!
+    * Now loop over trial_list which we defined earlier!
       Outside (above) the loop, define a variable called "subjectID" with your surname.
       Modify each trial within the loop so that each dictionary has a key
       'subject' with your name (the value of subjectID).
@@ -239,30 +239,30 @@ Exercise on lists and loops:
       trial['rt'] = ''
       They are placeholders for the subject's answers when we run the experiment.
 
-    * Pros: make the same trialList using the trialList = [value for var in list] syntax.
+    * Pros: make the same trial_list using the trial_list = [value for var in list] syntax.
       hint: value is a dictionary
 """
 
 # SOLUTIONS:
-for aFancyGoat in ['just', 'looping', 'and', 'looping', 'and', 'looping']:
-    print aFancyGoat
+for a_fancy_goat in ['just', 'looping', 'and', 'looping', 'and', 'looping']:
+    print a_fancy_goat
 
 subjectID = 'jonas'
-for trial in trialList:
+for trial in trial_list:
     trial['name'] = subjectID
     trial['ans'] = ''
     trial['rt'] = ''
     print trial
 
 # Method 1 (brief)
-trialList = [{'condition':condition, 'repetition':N} for condition in ['exiting', 'boring'] for N in range(10)]
-print trialList
+trial_list = [{'condition':condition, 'repetition':N} for condition in ['exiting', 'boring'] for N in range(10)]
+print trial_list
 
 # Method 2 (easier to understand)
-trialList = []
+trial_list = []
 for condition in ['exciting', 'boring']:
     for repetition in range(10):
-        trialList += [{'condition': condition, 'repetition':repetition}]
+        trial_list += [{'condition': condition, 'repetition':repetition}]
 
 		
 print """
@@ -289,7 +289,7 @@ print 'False or True -->', False or True
 print '1 == 1 -->', 1 == 1
 print '1 is 1 -->', 1 is 1
 print '1 == 2 or 1 == 2 -->', 1 == 2 or 1 == 2
-print 'theBigElephant == 3 + 2 -->', theBigElephant == 3 + 2
+print 'the_big_elephant == 3 + 2 -->', the_big_elephant == 3 + 2
 print '2 < 5 < 4 -->', 2 < 5 < 4
 
 # Running code dependent on conditions
@@ -301,9 +301,9 @@ else:
     print 'else...'
 
 # A short and convenient way to assign values dependent on conditions
-myTest = 'horse' if 1 == 2 else 'goat'  # useful for scoring trials!
-myTest2 = 'horse' if 1 == 2 else 'goat' if False or True else 'sparrow'
-print myTest, myTest2  # goat goat
+my_test = 'horse' if 1 == 2 else 'goat'  # useful for scoring trials!
+my_test2 = 'horse' if 1 == 2 else 'goat' if False or True else 'sparrow'
+print my_test, my_test2  # goat goat
 
 
 """
@@ -315,8 +315,8 @@ Exercise on logic:
     * Then what about
       5 < 8 and 5 + 2 == 6 or 'horse' == 'goat' or range(3) == [0, 1, 2]
 
-    * Define a variable called "doTests" and set it to True.
-      Then use an if-statement and run the above three tests if doTests is True
+    * Define a variable called "do_test" and set it to True.
+      Then use an if-statement and run the above three tests if do_test is True
     * Your participant responds either 'left', 'right' or something else.
       Print different things depending on her response.
 
@@ -326,8 +326,8 @@ Exercise on logic:
 """
 
 # SOLUTIONS
-doTests = True
-if doTests:
+do_test = True
+if do_test:
     print 5 < 8
     print 5 < 8 and 5 + 2 == 6
     print 5 < 8 and 5 + 2 == 6 or 'horse' == 'goat' or range(3) == [0, 1, 2]
@@ -357,24 +357,24 @@ We're going to create two methods in the experiment. A runBlock(condition) and a
 makeTrialList(condition).
 """
 # a chunk of code that can be run using a single command, usually returning something
-def addPlusOne(a, b):
+def add_plus_one(a, b):
     a += 1
     b += 1
     return a + b
 
-twoplusthree = addPlusOne(2, 3)  # method returns 7 (2+1 + 3+1) and assigns to var
-print twoplusthree
-fivePlusTen = addPlusOne(5, 10)  # 17
-print fivePlusTen
-addPlusOne(10, 10)  # output is not assigned to anything and thus does nothing
+two_plus_three = add_plus_one(2, 3)  # method returns 7 (2+1 + 3+1) and assigns to var
+print two_plus_three
+five_plus_ten = add_plus_one(5, 10)  # 17
+print five_plus_ten
+add_plus_one(10, 10)  # output is not assigned to anything and thus does nothing
 
 # default values!
-def addPlusX(a, b=2, x=1):
+def add_plus_X(a, b=2, x=1):
     return a + b + 2*x
 
-print addPlusX(1)
-print addPlusX(0, x=5)
-print addPlusX(5, 10)  # no keywords uses default order
+print add_plus_X(1)
+print add_plus_X(0, x=5)
+print add_plus_X(5, 10)  # no keywords uses default order
 
 """
 Exercise on methods:
@@ -390,27 +390,27 @@ Exercise on methods:
       arguments with default values.
 
     * Pros: make a method "makeTrialList" that takes a condition as input
-      and returns a trialList. You decide what kind of trials you want and
-      what difference the condition makes for the generation of the trialList.
+      and returns a trial_list. You decide what kind of trials you want and
+      what difference the condition makes for the generation of the trial_list.
 """
 
 # SOLUTIONS
-def fancyString(string):
+def fancy_string(string):
     return string[0], string[-1]
-print fancyString('Hello World')
+print fancy_string('Hello World')
 
-def evaluateMagnitude(number, below=2, above=7):
+def evaluate_magnitude(number, below=2, above=7):
     if number < below:
         return 'too low'
     elif number > above:
         return 'too high'
     else:
         return 'just right!'
-print evaluateMagnitude(5)
-print evaluateMagnitude(6, above=5)
+print evaluate_magnitude(5)
+print evaluate_magnitude(6, above=5)
 
 # You can make multiline strings
-commonMistakes = """
+common_mistakes = """
 ---------- COMMON MISTAKES ----------
 Here is a list of simple common mistakes. Remember:
     * every character counts. A single typo/ommision causes the script to crash.
@@ -425,9 +425,9 @@ Python is really helpful to let you debug errors.
               print myvariable  # doesn't exist because python is case sensitive
 
         * TypeError: the variables are of different types and you did something illegal.
-              myList = [1,2,3]
+              my_list = [1,2,3]
               myString = 'hello world'
-              print myList + myString  # TypeError
+              print my_list + myString  # TypeError
 
         * SyntaxError: the line didn't follow the python syntax.
               my Variable = 2  # SyntaxError. variables cannot contain spaces!
@@ -453,10 +453,10 @@ Exercise on errors:
 
 # There's a lot of useful built-in operations on each variable type. Let's
 # play with the string above.
-print commonMistakes.count('c')  # counts number of small c's in the text above.
-print commonMistakes.split('\n')[3]  # a list of lines. Prints 4th line.
-cmList = commonMistakes.split(' ')  # a list of words.
-print cmList[1].lower()  # lowercase. prints 'common' instead of 'COMMON'
+print common_mistakes.count('c')  # counts number of small c's in the text above.
+print common_mistakes.split('\n')[3]  # a list of lines. Prints 4th line.
+cm_words = common_mistakes.split(' ')  # a list of words.
+print cm_words[1].lower()  # lowercase. prints 'common' instead of 'COMMON'
 
 
 print """
@@ -465,10 +465,10 @@ We often combine multiple sequential commands in one line. It works because
 each command simply returns an output on which the next operation takes as input.
 For example:
 """
-print commonMistakes.split('\n')[1][2].capitalize().startswith('a')
+print common_mistakes.split('\n')[1][2].capitalize().startswith('a')
 """
 ... returns False because:
-    * commonMistakes.split('\n') returns a list with individual lines.
+    * common_mistakes.split('\n') returns a list with individual lines.
     * [1] gets the second line, "Here's a list of simple..."
     * [2] gets the third character of that line, 'r'
     * .capitalize() makes it capitalized, 'R'
@@ -483,14 +483,16 @@ print 5 / 2.0, float(5) / 2  # is 2.5 because there's a float. Tip: use "from __
 print 1 + 2*2**3 - 1/5.0  # Python follows the order of operations
 print 1 + (2*2)**(3 - 1) / 5.0  # Paranthesis prevail over other operations!
 print 10 % 2  # modulus
+# Style note: spacing in math should be used to make it easier to read by
+# bringing primary operations closer together than lower operations.
 
 
 print '\n ------ PICKING RANDOM ELEMENTS -------'
 import random  # import a module
-funnyList = ['one', 'mighty', 'fine', 'horse']
-print random.choice(funnyList)  # picks one
-print random.sample(funnyList, 3)  # picks three
-print random.sample(funnyList, len(funnyList))  # randomizes order!
+funny_list = ['one', 'mighty', 'fine', 'horse']
+print random.choice(funny_list)  # picks one
+print random.sample(funny_list, 3)  # picks three
+print random.sample(funny_list, len(funny_list))  # randomizes order!
 
 
 """
@@ -547,15 +549,15 @@ print [99] == [99], {'a': 4} == {'a': 4}, (5,2) == (5,2)  # True True True
 
 # The same is true for variables
 goat = [1, 2, 3]
-goatReference = goat  # reference to goat
-goatWannabe = [1, 2, 3]  # just a similar object
-goatCopy = goat[:]  # useful way of copying a list!
-print 'goat is goat1Reference -->', goat is goatReference  # True
-print 'goat is goat1Wannabe -->', goat is goatWannabe  # False
-print 'goat == goatWannabe -->', goat == goatWannabe  # True
-print 'goat is goatCopy -->', goat is goatCopy  # False
-print 'goat == goatCopy -->', goat == goatCopy  # True
+goat_reference = goat  # reference to goat
+goat_wannabe = [1, 2, 3]  # just a similar object
+goat_copy = goat[:]  # useful way of copying a list!
+print 'goat is goat1Reference -->', goat is goat_reference  # True
+print 'goat is goat1Wannabe -->', goat is goat_wannabe  # False
+print 'goat == goat_wannabe -->', goat == goat_wannabe  # True
+print 'goat is goat_copy -->', goat is goat_copy  # False
+print 'goat == goat_copy -->', goat == goat_copy  # True
 
 # Reference is really useful but also source of much confusion when changing referring variables
-goat[2] = 'surprise!'  # goatReference is 'changed' here as well because it is simply a reference to goat
-print goat, goatReference, goatWannabe
+goat[2] = 'surprise!'  # goat_reference is 'changed' here as well because it is simply a reference to goat
+print goat, goat_reference, goat_wannabe

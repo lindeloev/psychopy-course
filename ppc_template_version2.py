@@ -68,11 +68,14 @@ Further info:
 
 """
 
-# Import what you need
+# Import what you need. Set psychopy version explicitly.
 from __future__ import division
 import ppc
+import psychopy
+psychopy.useVersion('1.82.01')
 from psychopy import core, visual, event, gui, monitors
 from random import sample
+
 
 """
 SET VARIABLES
