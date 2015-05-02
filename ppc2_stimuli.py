@@ -40,9 +40,9 @@ event.waitKeys(maxWait=5, keyList=['space', 'n', 'm'])
 
 # ImageStim
 stim_image = visual.ImageStim(win, image='xkcd.png')
-stim_image.setSize([1, -1], '*')  # flip vertically
+stim_image.size *= [1, -1]  # flip vertically
 print stim_image.size  # the size of the stimulus in current units
-stim_text.setPos([0, 0.6])
+stim_text.pos = [0, 0.6]
 
 stim_image.draw()
 stim_text.draw()
@@ -56,20 +56,35 @@ Exercise on GratingStim, parameters and drawing:
       e.g. make a gabor patch by setting mask to a gaussian and spatial frequency (sf) to 10
     * show it on top of stim_image and stim_text with reduced opacity
 	  hint: to draw on top, simply draw last.
+   
+    * pros: try animating stuff by wrapping draw(), flip() and a change of
+      stimulus attributes in a loop, e.g. with the following per-frame change:
+          stim_image.ori += 0.1   # change stim, attribute and value
+          if event.getKeys(): break  # to end on a keypress
 """
 
 # SOLUTION
 stim_grating = visual.GratingStim(win)
-stim_grating.setMask('gauss')
-stim_grating.setSF(10)
-stim_grating.setPos([-0.1, -0.1])
-stim_grating.setOpacity(0.5)
+stim_grating.mask = 'gauss'
+stim_grating.sf = 10
+stim_grating.pos = [-0.1, -0.1]
+stim_grating.opacity = 0.5
 
 stim_image.draw()
 stim_text.draw()
 stim_grating.draw()
 win.flip()
 event.waitKeys()
+
+# Animate
+while True:
+    stim_image.ori += 0.5
+    stim_grating.size += 0.01
+    stim_grating.sf *= 1.005
+    stim_image.draw()
+    stim_grating.draw()
+    win.flip()
+    if event.getKeys(): break  # to end on a keypress
 
 
 # SHOW SLIDES HERE
@@ -85,7 +100,7 @@ my_monitor.setSizePix([1024, 768])
 
 # Start a new window with degrees as default unit
 win.close()
-win = visual.Window(monitor=my_monitor, units='deg', color='black')
+win = visual.Window(monitor=my_monitor, color='black')
 
 # In cm
 stim_image = visual.ImageStim(win, image='xkcd.png', size=[10, 10], units='cm')
@@ -94,10 +109,11 @@ win.flip()
 event.waitKeys()
 
 # in degrees
-stim_image = visual.ImageStim(win, image='xkcd.png', size=[10, 10])
+stim_image.units = 'deg'
 stim_image.draw()
 win.flip()
 event.waitKeys()
+
 
 """
 Exercise on visual size precision:
@@ -123,6 +139,7 @@ import ppc
 print ppc.deg2cm(10, 65)
 print ppc.deg2cm(3, 60)
 
+
 # ----------------------
 # EQUILUMINANT STIMULI
 # ... especially if you calibrate your monitor and get a conversion matrix
@@ -134,7 +151,7 @@ stim_shape1 = visual.ShapeStim(win, units='cm', size=5,
 stim_shape2 = visual.ShapeStim(win, units='cm', size=5,
     fillColorSpace='dkl', fillColor=[0, 0, -1], pos=[0, -2],
     vertices=[[0,0], [1,0], [1,1], [0,1]])
-stim_shape2.setVertices([0.5, 0.5], '-')
+stim_shape2.vertices -= [0.5, 0.5]
 
 stim_shape1.draw()
 stim_shape2.draw()
@@ -148,10 +165,10 @@ print ppc.dkl2rgb([0, 0, -1])  # first parameter should be the same
 """
 Exercise on colors:
     * make a ShapeStim and change its line and fill colors to something in DKL.
-      hint: there's a "stim.set*" function for almost everything. This is true
-      for ShapeStim fillcolor and linecolor as well.
+      hint: ShapeStim has the attibutes fillcolor and linecolor.
     * try changing the color of the stim_image from earlier.
 """
+
 
 
 # ----------------------

@@ -78,12 +78,11 @@ port.setData(0)
 
 
 # GOOD: logging just after win.flip()
+win.callOnFlip(clock.reset)  # Set clock time to zero
+win.callOnFlip(port.setData, 255)  # Start trigger
 for frameN in range(3):
     stim.draw()
     win.flip()
-    if frameN == 0:             # For first frame, just after stimulus appears on monitor
-        clock.reset()           # Set clock time to zero
-        port.setData(255)   # Start trigger
 win.flip()                      # Show blank screen
 duration = clock.getTime()      # Get duration just when blank screen has been presented, i.e. when stimulus ends
 port.setData(0)             # Stop trigger

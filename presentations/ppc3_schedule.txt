@@ -1,0 +1,150 @@
+SCHEDULE FOR DAY 3
+------------------
+
+makeTrialList:
+	1. Start with an empty trial with full structure
+	2. Make oris = [0, 90] and create those trials
+	3. Exercise: make trials by adding for-loops.
+	4. Randomize, add trial['no'] and put in function
+
+Set up stimuli and variables.
+	1. Window (copy-paste)
+	2. Exercise: various stimuli and variables
+	
+Present a trial:
+	1. Make function, call makeTrialList and loop through trials.
+	2. Make the fixation cross
+	3. Exercise: add other flip-loops and render using trial.
+	4. Collect responses
+	5. Exercise: score the trial
+	6. Save trial using ppc.writer. Inspect output
+
+Finishing up:
+	1. Make dialogue with "subjectID" and "mood = ['happy', 'sad', 'meh']
+	2. Exercise: finish dialogue
+	3. React to condition in makeTrialList and execution
+	4. Add breaks
+	5. Assess timing of stimuli
+
+	
+EXERCISES:
+------------------
+"""
+Exercise 1: create trialList.
+    * add for-loops so that every combination of the above variables is generated.
+      oris --> trial['ori'],
+      positions --> trial['xpos'],
+      framesStim --> trial['duration']
+    * add a for-loop so that each trial is repeated "repetitions" times
+      hint: range(repetitions) is a list with the length "repetitions"
+    * for now, we're just going to deal with the "trueFix" condition.
+      set trial['fixPos'] to the the same as trial['xpos'].
+
+    * pros: randomize the trialList after it is generated.
+      hint: random.sample() or random.shuffle()
+    * pros: pack this in a method called "makeTrialList(condition)" which
+      returns the trialList
+"""
+
+"""
+Exercise 2: create stimuli.
+Now we're going to add stimuli to the "import and stimuli" section and add
+control of various stimuli-properties from the "variables" section. Suggested
+variable names are ("quoted in parenthesis").
+
+    * Create a window ("win") using degrees as units.
+      Let the user specify distance to the monitor ("monDistance"), width of
+      the monitor ("monWidth") and resolution of the monitor ("monSizePix").
+      Hint: use monitors module and of course visual.Window.
+
+      Furthermore, the window should be fullscreen, have a black background and
+      allowGUI = False.
+
+    * Make a gabor patch ("stimGabor"). Let the user specify SF ("stimSF"),
+      opacity ("stimOpacity") and size ("stimSize").
+      hint: visual.GratingStim, mask='gauss'.
+
+    * Make a fixation cross ("stimFix"). Let the user specify the height ("fixHeight").
+      Hint: visual.TextStim with the text '+'.
+
+    * Make a text for a break ("stimText"). Let the user specify position ("messagePos")
+      and height ("messageHeight"). Set the wrapWidth=999 to avoid uncontrolled line breaks.
+
+    * make a two beeps ("beepSuccess") and ("beepFail") using sound.SoundPyo.
+      Suggestions for success: a C of 0.1 seconds at octave 6
+      Suggestions for fail: a C of 0.4 seconds at octave 4
+
+    * Make a clock ("clock"). We're going to use it to assess timing of responses and stimuli.
+      hint: core.Clock
+
+    * pros: start working on a method ("runBlock") in the "methods" section which
+          1. generates a trialList using makeTrialList
+          2. loops through trials
+          3. present a fixation cross in a flip-loop
+          4. present a stimulus in a flip-loop
+          5. present a mask in a flip-loop
+          6. collect response (event.waitKeys will do here)
+"""
+
+"""
+Exercise 3: present stimuli in flip-loops.
+    * Present the stimulus for the correct duration with the fixation cross on top.
+      Remember to set the orientation and position of the gabor patch
+      in the beginning of the trial.
+      Hint: all the stuff you need is available in trial['duration'], trial['ori'] etc.
+      Hint: flip-loop over trial['duration']
+      Hint: stimGabor.setOri and setPos
+
+    * Present the mask for the correct duration.
+      Hint: we need a new variable "framesMask" to control mask duration.
+      Hint: draw first at horizontal then a vertical gabor patch and then flip.
+
+    * Then show a fixation cross again, for the data collection. No duration is
+      needed as we're going to use event.waitKeys.
+
+    * Pro: if your concerned about the timing of drawing the mask, you can make
+      a visual.BufferImageStim() "screenshot" in the "stimuli" section and use that.
+"""
+
+"""
+Exercise 4: handle responses and give feedback:
+    * save trial['score']. Should be 1 on correct response and 0 otherwise.
+      Hint: trial['ori'] and trial['response'] should match - sort of.
+      Hint: think in everyday language: "if the orientation was 90 and the subject
+      pressed left, trial['score'] should be 1." etc.
+    * Play the beepSuccess if subject answered correctly, and the beepFail otherwise.
+      Hint: beepSuccess.play()
+
+    * Pros: if you want to record responses already from e.g. stimulus onset,
+      use ppc.Keyboard because we're in flip-loops and event.getKeys/event.waitKeys
+      would fail to deliver exact timing here.
+      Hint: the .reset() method clears all earlier events and resets timing.
+"""
+
+"""
+Exercise 5: create initial dialogue.
+    * Change it so that we now have:
+        SubjectID, 
+		condition: "trueFix" or "falseFix"
+        age
+        gender: "male" or "female"
+
+    * Change the order to the following: subject, age, gender, condition.
+"""
+
+"""
+Exercise 6: update trials using info from the dialogue.
+    Update the trialList so that subject, age and gender takes their values
+    from the dialogue box. We're going to keep condition being determined by
+    the argument to makeTrialList.
+"""
+
+"""
+Exercise 7 (for the over-achievers): test and modify your experiment.
+	* I'm worried that the drawing of the mask is too slow. Test it.
+	  Hint: ppc.timer using a multi-line script.
+	* What is the actual visual angle extended by the gabor patch?
+	  Adjust so that it is closer to 5 degrees.
+	  Hint: ppc.deg2cm
+	* Add a new position to the task.
+"""

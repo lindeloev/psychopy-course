@@ -86,36 +86,23 @@ ppc.timer(script, 'stim, clock')
 
 # You can time stuff in the actual experiment to get more ecologically valid timing
 # However, they give identical results (as they should) so ppc.timer() is simpler.
-# It's too optimistic but close enough to be useful for identifying bottlenecks.
+# ppc.timer() might be too optimistic but close enough to be useful for identifying 
+# bottlenecks.
 stim = visual.TextStim(win)
 clock = core.Clock()
-timesPos, timesWait, timesClock, timesText = [], [], [], []  # we'll fill these lists with individual execution times
-for trial in range(1000):
-    # Do stuff here. And then in the critical part:
-    clock.reset()
-    timesClock += [clock.getTime()]
+def testUsingClock(code):
+    times = []    # we'll fill this list with individual execution times
+    for trial in range(1000):
+        clock.reset()
+        eval(code)
+        times += [clock.getTime()]
+    return 1000 * sum(times) / len(times)
 
-    clock.reset()
-    stim.setPos((1,1))
-    timesPos += [clock.getTime()]
+def compare(code):
+    # Calculate mean execution time and compare to "timer" function
+    ppc.timer(code, setup='core, stim')
+    print '\nclock baseline:', testUsingClock(code), 'ms'  # negligeble, therefore not used
 
-    clock.reset()
-    stim.setText('Setting a long text is slow')
-    timesText += [clock.getTime()]
-
-    clock.reset()
-    core.wait(0.0017)
-    timesWait += [clock.getTime()]
-
-# Calculate mean execution time and compare to "timer" function
-clockBaseline = 1000 * sum(timesClock) / len(timesClock)
-print '\nclock baseline:', clockBaseline, 'ms'  # negligeble, therefore not used
-
-ppc.timer('stim.setPos((1,1))', setup='stim')
-print 'RESULT:', 1000 * sum(timesPos) / len(timesPos), 'ms (in-script test)'
-
-ppc.timer('core.wait(0.0017)', setup='core')  # should be close to 1.7 ms
-print 'RESULT:', 1000 * sum(timesWait) / len(timesWait), 'ms (in-script test)'  # should be close to 1.7 ms
-
-ppc.timer('stim.setText("Setting a long text is slow")', setup='stim')
-print 'RESULT:', 1000 * sum(timesText) / len(timesText), 'ms (in-script test)'
+compare('stim.setPos((1,1))')
+compare('core.wait(0.0017)')  # should be close to 1.7 ms
+compare('stim.text = "Setting a long text is slow"')

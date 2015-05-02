@@ -1,0 +1,20 @@
+DAY 2 PRECISION
+-------------------
+Run through ppc_stimuli.py
+
+
+DAY 2: TIMING
+-------------------
+Show slides
+
+Keyboard:
+   Run iohub keyboard demo?
+   Run demo of iohub versus event for win.flip()
+
+Run through ppc_timing.py and results!
+Run through ppc_timer.py with exercises!
+
+DAY 2: TO DO
+-------------------
+Animation?
+More on sound?

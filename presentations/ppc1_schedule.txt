@@ -1,0 +1,18 @@
+DAY 1: NOTES AND SUGGESTIONS
+----------------------------
+ * Spyder couldn't see PsychoPy on Mac. Figure out how to make it work!
+ * Basic Python took a lot of time to go through! 2½ hours and I only covered until loops. And I forgot to do the exercises!
+ * 
+
+DAY 1: INTRODUCTION
+-------------
+ * round-table presentation.
+ * motivational talk!
+ * create a folder for this course
+ * put all scripts in the folder
+ * USB / break / technical issues
+
+ 
+DAY 1: PYTHON
+--------------
+Just go through it :-)
