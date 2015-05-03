@@ -1,20 +1,19 @@
-DAY 2 PRECISION
--------------------
+DAY 2 PRECISE STIMULATION
+-------------------------
 Run through ppc_stimuli.py
+Demonstrate psychopy.org API
 
 
-DAY 2: TIMING
+DAY 2: TIMING OF STIMULATION
 -------------------
-Show slides
+Idea: Not just about timing but also about nice code!
+* Show slides
+* Run through ppc_timing.py and results!
+* Run through ppc_timer.py with exercises!
 
-Keyboard:
-   Run iohub keyboard demo?
-   Run demo of iohub versus event for win.flip()
 
-Run through ppc_timing.py and results!
-Run through ppc_timer.py with exercises!
+DAY 2: TIMING OF INPUT
+----------------------
+* Input recommendation: event for developing, iohub for experiment
+* Keyboard: iohub keyboard demo + iohub versus event
 
-DAY 2: TO DO
--------------------
-Animation?
-More on sound?

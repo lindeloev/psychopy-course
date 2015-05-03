@@ -6,7 +6,7 @@ This walks you through some common errors which messes timing up.
   3. put trigger/logging after win.flip() or sound.play()
   4. how to synchronize visual, audio and trigger
 
-Jonas Lindeløv, 2014
+Jonas Kristoffer Lindeløv, 2014. Revised in 2015.
 """
 
 # Initiate stimuli etc.
@@ -14,10 +14,10 @@ from psychopy import core, visual, parallel, sound
 port = parallel.ParallelPort(address=0x0378)
 clock = core.Clock()
 win = visual.Window(fullscr=True, color='black', allowGUI=False)
-soundPyo = sound.SoundPyo('beep2.wav', hamming=False)
+beep_pyo = sound.Sound('beep.wav')
 
 import ppc
-beep = ppc.Sound('beep2.wav')
+beep_winsound = ppc.Sound('beep2.wav')
 
 
 """
@@ -45,15 +45,15 @@ Process heavy stuff in advance.
 # BAD: doing process heavy stuff in timing critical periods
 for frameN in range(3):
     stim = visual.TextStim(win, text="Not on time!")  # Initialize a whole new stimulus: very heavy on resources and likely to cause a delay.
-    stim.setPos((1,2))  # Or: set constant attributes on every loop that really remains constant throughout the trial.
-    stim.setColor('green')
+    stim.pos = (1,2)  # Or: set constant attributes on every loop that really remains constant throughout the trial.
+    stim.color = 'green'
     stim.draw()
     win.flip()
 
 # GOOD: do things in advance, outside the loop
 stim = visual.TextStim(win, text="Right on time!")
-stim.setPos((1,2))
-stim.setColor('green')
+stim.pos = (1,2)
+stim.color = 'green'
 for frameN in range(3):
     stim.draw()
     win.flip()
@@ -72,7 +72,7 @@ duration = clock.getTime()  # Get time since clock.reset(). Note that this is ex
 
 # BAD for audio: logging sound before it is initiated.
 port.setData(15)
-soundPyo.play()  # sound.SoundPyo is better than sound.Sound but still ~80-120 ms delayed with jitter
+beep_pyo.play()  # sound.beep_pyo is better than sound.Sound but still ~80-120 ms delayed with jitter
 core.wait(0.1)  # duration of trigger
 port.setData(0)
 
@@ -88,7 +88,7 @@ duration = clock.getTime()      # Get duration just when blank screen has been p
 port.setData(0)             # Stop trigger
 
 # GOOD for audio:
-beep.play()  # using winsound, Windows only! Low latency if soundcard is set up properly
+beep_winsound.play()  # using winsound, Windows only! Low latency if soundcard is set up properly
 port.setData(15)
 core.wait(0.1)  #Duration of trigger
 port.setData(0)
@@ -105,13 +105,15 @@ Synchronizing visual, audio and trigger.
 # See next script if you want them (almost) perfectly synchronized.
 
 for i in range(20):
+    # Do these things on first flip
+    win.callOnFlip(beep_winsound.play)  # play sound! Takes less than 0.1 ms
+    win.callOnFlip(port.setData, 15)  # takes less than 0.01 ms
+    win.callOnFlip(clock.reset)  # takes less than 0.01 ms
+
+    # Begin flip-loop
     for frame in range(3):
         stim.draw()
         win.flip()  # every 16.667 ms
-        if frame == 0:
-            beep.play()  # play sound! Takes less than 0.1 ms
-            port.setData(15)  # takes less than 0.01 ms
-            clock.reset()  # takes less than 0.01 ms
     win.flip()
     port.setData(0)  # takes less than 0.01 ms
     duration = clock.getTime()  # takes less than 0.01 ms
@@ -138,7 +140,7 @@ for i in range(20):
         # sound initiated before flip
         if frame == 0:
             while clock.getTime() < frameInterval + visualDelay - soundDelay: pass  # pause for just the right duration
-            beep.play()
+            beep_winsound.play()
 
         # The flip
         win.flip()

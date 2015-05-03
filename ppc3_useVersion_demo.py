@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-DEMONSTRATE psychopy.useVersion()
+Demonstrate psychopy.useVersion()
 Example: visual.TextStim.text attributeSettter was introduced in 1.81.00.
+
+Jonas Kristoffer Lindeløv, 2015.
 """
 
 

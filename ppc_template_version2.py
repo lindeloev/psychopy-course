@@ -2,7 +2,7 @@
 """
 PSYCHOPY EXPERIMENT SCRIPT TEMPLATE, VERSION 2012-10
 Free to use for any purpose. Credit is nice but not required.
-By Jonas Lindeløv: jonas@cnru.dk
+By Jonas Kristoffer Lindeløv: jonas@cnru.dk
 
 ----------
 

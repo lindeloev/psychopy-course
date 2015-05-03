@@ -9,7 +9,7 @@ Find ppc.py on the course website.
 
 Version 2014-02
 Free to use for any purpose. Credit is nice but not required.
-By Jonas Lindeløv: jonas@cnru.dk
+By Jonas Kristoffer Lindeløv: jonas@cnru.dk
 
 ----------
 

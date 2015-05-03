@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-DEMONSTRATE iohub module versus event module with a flip-loop.
+Demonstrate iohub module versus event module with a flip-loop.
+iohub registers responses during win.flip(), thus always scores
+responses as faster than event.getKeys() which timestamps according
+to the time that the function is called.
+
+Jonas Kristoffer Lindeløv, 2015.
 """
 import psychopy
 psychopy.useVersion('1.81.02')

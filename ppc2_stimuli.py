@@ -5,7 +5,7 @@ Introduction to different stimulus types in Python.
  * cross-monitor consistent stimulus size in cm and degrees
  * within-monitor equal stimulus luminsities using the DKL colorspace
 
-Jonas Lindeløv, 2014
+Jonas Kristoffer Lindeløv, 2014. Revised 2015.
 """
 
 # -----------------------------
@@ -23,15 +23,21 @@ event.waitKeys()
 """
 Exercise on changing parameters:
     * change background color of the Window to black. And don't do fullscreen.
-	  Hint: you need to create a new window. If you have one open, close it first using win.close()
+	  Hint: if you want to do this while running the experiment, you can either:
+          (1) change win.color and call win.flip() twice for it to take effect.
+          (2) close the current window using win.close() and create a new.
+
     * change the height and orientation of the TextStim.
     * event.waitKeys() waits infinitely. Make it wait for a maximum of 5 seconds
       and only react to the keys ['space', 'n', 'm'].
 """
 
 # SOLUTION:
-win.close()
-win = visual.Window(color='black')  # using earlier Window
+win.color = 'black'
+win.flip()
+win.flip()
+event.waitKeys()
+
 stim_text = visual.TextStim(win, text='Welcome', color='gray', height=0.2, ori=30)
 stim_text.draw()
 win.flip()
@@ -114,7 +120,6 @@ stim_image.draw()
 win.flip()
 event.waitKeys()
 
-
 """
 Exercise on visual size precision:
     * Specify your own monitor dimensions in monitor center (using Coder or Builder)
@@ -178,24 +183,26 @@ Exercise on colors:
 
 # Psychopy sounds
 from psychopy import sound, core
-sound_pygame = sound.SoundPygame('beep.wav', secs=0.1)
-sound_pyo = sound.SoundPyo('beep.wav', secs=0.1)
 clock = core.Clock()
+sound_pygame = sound.SoundPygame('beep.wav', secs=0.1)
 
-# winsound
-sound_winsound = ppc.Sound('beep.wav')
+sound = sound.Sound('beep.wav', secs=0.1)
+sound.play()
+core.wait(0.5)
+
 
 #playing
 sound_pygame.play()
 core.wait(0.5)
 
-sound_pyo.play()
-core.wait(0.5)
 
+# winsound
+sound_winsound = ppc.Sound('beep.wav')
 sound_winsound.play()
 core.wait(0.5)
 
 """
 Exercise:
-   * Play around with sound_pyo(), adjusting parameters etc.
+   * sound.Sound can generate sounds. Try setting value to either 440 and 'C'. 
+   * Look at other parameters such as octave, secs, and volume.
 """

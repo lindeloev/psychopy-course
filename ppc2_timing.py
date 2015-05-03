@@ -4,7 +4,7 @@ Timing python code and psychopy using the handy ppc.timer() function.
 It's used to identify bottlenecks in the script, especially the part
    within the flip()-loop.
 
-Jonas Lindeløv, 2013.
+Jonas Kristoffer Lindeløv, 2013. Revised in 2015.
 """
 
 import ppc
@@ -52,12 +52,12 @@ TIMING EXERCISES:
 	4. Test whether core.wait() is accurate, e.g. by setting it to 7 ms
 	   OBS: core.wait() is a slow first-runner. Run once before doing the timing.
     4. Create a TextStim.
-        How long does it take to do textStim.setText('hi')
-        How long does it take to do textStim.setText('hi there my dear old friend. I\'m very happy to see you again! We should meet more often')
+        How long does it take to do textStim.text = 'hi'
+        How long does it take to do textStim.text = 'hi there my dear old friend. I\'m very happy to see you again! We should meet more often'
 	
 	5. Pro: Do a multi-line alteration of a GratingStim (rotation, color etc.)
 		   and time it including the draw but excluding the flip.	
-    6. Pro: How large a text can you put into visual.TextStim.setText() without loosing frames?
+    6. Pro: How large a text can you put into visual.TextStim.text without loosing frames on your system?
 """
 
 # SOLUTIONS #1-#3
@@ -67,15 +67,15 @@ ppc.timer('clock.getTime()', 'clock')
 
 # 4 short vs. long text
 stim = visual.TextStim(win)
-ppc.timer('stim.setText("hi")', 'stim')
-ppc.timer('stim.setText("hi there my dear old friend. I\'m very happy to see you again! We should meet more often")', 'stim')
+ppc.timer('stim.text = "hi"', 'stim')
+ppc.timer('stim.text = "hi there my dear old friend. I\'m very happy to see you again! We should meet more often"', 'stim')
 
 # 6 milti-line
 stim = visual.GratingStim(win)
 script = """
-    stim.setPos([0, 1])
-    stim.setOri(45)
-    stim.setColor('black')
+    stim.pos = [0, 1]
+    stim.ori = 45
+    stim.color = 'black'
     stim.draw()
     #win.flip()
     duration = clock.getTime()
@@ -103,6 +103,6 @@ def compare(code):
     ppc.timer(code, setup='core, stim')
     print '\nclock baseline:', testUsingClock(code), 'ms'  # negligeble, therefore not used
 
-compare('stim.setPos((1,1))')
+compare('stim.pos = (1,1)')
 compare('core.wait(0.0017)')  # should be close to 1.7 ms
 compare('stim.text = "Setting a long text is slow"')
