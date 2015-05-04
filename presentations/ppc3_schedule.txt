@@ -146,5 +146,5 @@ Exercise 7 (for the over-achievers): test and modify your experiment.
 	* What is the actual visual angle extended by the gabor patch?
 	  Adjust so that it is closer to 5 degrees.
 	  Hint: ppc.deg2cm
-	* Add a new position to the task.
+	* Add a new position condition to the task.
 """

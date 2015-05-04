@@ -1,7 +1,9 @@
+* Download course files
+
 DAY 2 PRECISE STIMULATION
 -------------------------
-Run through ppc_stimuli.py
-Demonstrate psychopy.org API
+* Run through ppc_stimuli.py
+* Demonstrate psychopy.org API
 
 
 DAY 2: TIMING OF STIMULATION
