@@ -14,6 +14,7 @@ Idea: Not just about timing but also about nice code!
 
 DAY 2: TIMING OF INPUT
 ----------------------
+* Input demo
 * Input recommendation: event for developing, iohub for experiment
 * Keyboard: iohub keyboard demo + iohub versus event
 
