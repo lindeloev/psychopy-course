@@ -54,12 +54,12 @@ stim_image.draw()
 stim_text.draw()
 win.flip()
 event.waitKeys()
-
 """
 Exercise on GratingStim, parameters and drawing:
     * make a GratingStim (call it e.g. stim_grating) and show it to see what it does
     * change various parameters after it is initiated,
-      e.g. make a gabor patch by setting mask to a gaussian and spatial frequency (sf) to 10
+      e.g. make a gabor patch by setting mask to a gaussian and spatial 
+      frequency (sf) to 10.
     * show it on top of stim_image and stim_text with reduced opacity
 	  hint: to draw on top, simply draw last.
    
@@ -68,7 +68,6 @@ Exercise on GratingStim, parameters and drawing:
           stim_image.ori += 0.1   # change stim, attribute and value
           if event.getKeys(): break  # to end on a keypress
 """
-
 # SOLUTION
 stim_grating = visual.GratingStim(win)
 stim_grating.mask = 'gauss'
@@ -151,10 +150,14 @@ print ppc.deg2cm(3, 60)
 # ----------------------
 
 # Specify colors using the DKL colorspace
+# It is DKL = [luminance, hue, saturation] where
+# luminance is degrees -90 to 90
+# hue is degrees 0 to 360
+# saturation is excentricity 0 to 1
 stim_shape1 = visual.ShapeStim(win, units='cm', size=5,
-    fillColorSpace='dkl', fillColor=[0, 45, 1], pos=[0, 2])
+    fillColorSpace='dkl', fillColor=[0, 45, 1], pos=[0, 2])  # strong, medium luminance
 stim_shape2 = visual.ShapeStim(win, units='cm', size=5,
-    fillColorSpace='dkl', fillColor=[0, 0, -1], pos=[0, -2],
+    fillColorSpace='dkl', fillColor=[0, 215, 0.3], pos=[0, -2],  # should be a pale isoluminant contrast color
     vertices=[[0,0], [1,0], [1,1], [0,1]])
 stim_shape2.vertices -= [0.5, 0.5]
 
@@ -205,4 +208,7 @@ core.wait(0.5)
 Exercise:
    * sound.Sound can generate sounds. Try setting value to either 440 and 'C'. 
    * Look at other parameters such as octave, secs, and volume.
+   
+   * Extreme pros: create an Nx2 numpy array containing the actual audio
+     samples and play it!
 """

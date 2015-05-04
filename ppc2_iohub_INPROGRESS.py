@@ -55,7 +55,7 @@ print 'finish'
 
 
 """
-TO DO
+TO DO:
 """
 
 # GETTING KEYBOARD DURING RUNTIME
