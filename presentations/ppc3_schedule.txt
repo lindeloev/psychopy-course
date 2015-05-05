@@ -1,50 +1,39 @@
 SCHEDULE FOR DAY 3
 ------------------
+Set up stimuli and constants/variables.
+	1. Window (copy-paste)
+	2. Exercise: various stimuli and variables
 
-makeTrialList:
+
+INSTRUCTIONS: makeTrialList
 	1. Start with an empty trial with full structure
 	2. Make oris = [0, 90] and create those trials
 	3. Exercise: make trials by adding for-loops.
 	4. Randomize, add trial['no'] and put in function
 
-Set up stimuli and variables.
-	1. Window (copy-paste)
-	2. Exercise: various stimuli and variables
-	
-Present a trial:
-	1. Make function, call makeTrialList and loop through trials.
-	2. Make the fixation cross
-	3. Exercise: add other flip-loops and render using trial.
-	4. Collect responses
-	5. Exercise: score the trial
-	6. Save trial using ppc.writer. Inspect output
 
-Finishing up:
-	1. Make dialogue with "subjectID" and "mood = ['happy', 'sad', 'meh']
-	2. Exercise: finish dialogue
-	3. React to condition in makeTrialList and execution
-	4. Add breaks
-	5. Assess timing of stimuli
-
-	
-EXERCISES:
-------------------
 """
-Exercise 1: create trialList.
-    * add for-loops so that every combination of the above variables is generated.
-      oris --> trial['ori'],
-      positions --> trial['xpos'],
-      framesStim --> trial['duration']
+Exercise 1: create trial_list (a list of dictionaries/trials).
+    * add for-loops so that every combination of the above variables 
+      is generated.
+      ORIS --> trial['ori'],
+      POSITIONS --> trial['xpos'],
+      GABOR_FRAMES --> trial['duration']
     * add a for-loop so that each trial is repeated "repetitions" times
       hint: range(repetitions) is a list with the length "repetitions"
     * for now, we're just going to deal with the "trueFix" condition.
-      set trial['fixPos'] to the the same as trial['xpos'].
+      set trial['fix_pos'] to the the same as trial['gabor_pos'].
 
     * pros: randomize the trialList after it is generated.
       hint: random.sample() or random.shuffle()
-    * pros: pack this in a method called "makeTrialList(condition)" which
-      returns the trialList
+      hint: import
+    * pros: pack this in a method called "make_trial_list(condition)" which
+      returns the trialList. Condition will later be used to create xpos
+      for the "falseFix" condition.
 """
+
+
+INSTRUCTION: just do this
 
 """
 Exercise 2: create stimuli.
@@ -52,39 +41,47 @@ Now we're going to add stimuli to the "import and stimuli" section and add
 control of various stimuli-properties from the "variables" section. Suggested
 variable names are ("quoted in parenthesis").
 
-    * Create a window ("win") using degrees as units.
-      Let the user specify distance to the monitor ("monDistance"), width of
-      the monitor ("monWidth") and resolution of the monitor ("monSizePix").
+    * Create a window ("win") using degrees as units. All other stimuli
+      will inherit this unit by default, so no need to specify it there.
+
+    * Let your naive RA specify distance to the monitor ("MON_DISTANCE"), width of
+      the monitor ("MON_WIDTH") and resolution of the monitor ("MON_SIZE").
       Hint: use monitors module and of course visual.Window.
 
       Furthermore, the window should be fullscreen, have a black background and
       allowGUI = False.
 
-    * Make a gabor patch ("stimGabor"). Let the user specify SF ("stimSF"),
-      opacity ("stimOpacity") and size ("stimSize").
+    * Make a gabor patch ("stim_gabor"). Let the user specify spatial frequency 
+      ("GABOR_SF") and size ("GABOR_SIZE").
       hint: visual.GratingStim, mask='gauss'.
 
-    * Make a fixation cross ("stimFix"). Let the user specify the height ("fixHeight").
+    * Make a fixation cross ("stim_fix"). Let the user specify the height ("FIX_HEIGHT").
       Hint: visual.TextStim with the text '+'.
-
-    * Make a text for a break ("stimText"). Let the user specify position ("messagePos")
-      and height ("messageHeight"). Set the wrapWidth=999 to avoid uncontrolled line breaks.
-
-    * make a two beeps ("beepSuccess") and ("beepFail") using sound.SoundPyo.
+    
+    * Make a text for a break ("stim_text"). Let the user specify position ("MESSAGE_POS")
+      and height ("MESSAGE_HEIGHT"). Set the wrapWidth=999 to avoid uncontrolled line breaks.
+    
+    * make a two beeps ("sound_success") and ("sound_fail") using sound.Sound or ppc.Sound.
       Suggestions for success: a C of 0.1 seconds at octave 6
       Suggestions for fail: a C of 0.4 seconds at octave 4
-
+    
     * Make a clock ("clock"). We're going to use it to assess timing of responses and stimuli.
       hint: core.Clock
 
-    * pros: start working on a method ("runBlock") in the "methods" section which
-          1. generates a trialList using makeTrialList
+    * pros: start working on a method ("run_block") in the "methods" section which
+          1. generates a trialList using make_trial_list
           2. loops through trials
           3. present a fixation cross in a flip-loop
           4. present a stimulus in a flip-loop
           5. present a mask in a flip-loop
           6. collect response (event.waitKeys will do here)
 """
+
+
+INSTRUCTION: Present a trial
+	1. Make function, call it run_condition and loop through trials.
+	2. Make the fixation cross
+	3. Exercise: add other flip-loops and render using trial.
 
 """
 Exercise 3: present stimuli in flip-loops.
@@ -93,18 +90,26 @@ Exercise 3: present stimuli in flip-loops.
       in the beginning of the trial.
       Hint: all the stuff you need is available in trial['duration'], trial['ori'] etc.
       Hint: flip-loop over trial['duration']
-      Hint: stimGabor.setOri and setPos
+      Hint: ori and pos attributes
 
-    * Present the mask for the correct duration.
-      Hint: we need a new variable "framesMask" to control mask duration.
-      Hint: draw first at horizontal then a vertical gabor patch and then flip.
-
-    * Then show a fixation cross again, for the data collection. No duration is
-      needed as we're going to use event.waitKeys.
-
+    * Present the mask for the correct duration with fixation cross on top. 
+      The mask is horizontal and vertical gabor patches superimposed to 
+      reduce retinal afterimages.
+      Hint: we need a new constant "FRAMES_MASK" to control mask duration.
+            set it to 3 frames.
+      Hint: draw horizontal, vertical, fix, and then flip.
+      
     * Pro: if your concerned about the timing of drawing the mask, you can make
-      a visual.BufferImageStim() "screenshot" in the "stimuli" section and use that.
+      a visual.BufferImageStim() "screenshot" in the "stimuli" section and use that
+      since it is identical from trial to trial.
 """
+
+
+
+INSTRUCTION: 
+	1. Collect responses
+	2. Exercise: score the trial
+	3. Save trial using ppc.writer. Inspect output.
 
 """
 Exercise 4: handle responses and give feedback:
@@ -112,8 +117,7 @@ Exercise 4: handle responses and give feedback:
       Hint: trial['ori'] and trial['response'] should match - sort of.
       Hint: think in everyday language: "if the orientation was 90 and the subject
       pressed left, trial['score'] should be 1." etc.
-    * Play the beepSuccess if subject answered correctly, and the beepFail otherwise.
-      Hint: beepSuccess.play()
+    * Play the sound_success if subject answered correctly, and the sound_fail otherwise.
 
     * Pros: if you want to record responses already from e.g. stimulus onset,
       use ppc.Keyboard because we're in flip-loops and event.getKeys/event.waitKeys
@@ -121,15 +125,24 @@ Exercise 4: handle responses and give feedback:
       Hint: the .reset() method clears all earlier events and resets timing.
 """
 
+
+INSTRUCTION: Finishing up
+	1. Make dialogue with "subjectID" and "mood = ['happy', 'sad', 'meh']
+	2. Exercise: finish dialogue
+	3. React to condition in makeTrialList and execution
+	4. Add breaks
+	5. Assess timing of stimuli
+
 """
 Exercise 5: create initial dialogue.
     * Change it so that we now have:
         SubjectID, 
-		condition: "trueFix" or "falseFix"
         age
         gender: "male" or "female"
+        condition: "trueFix" or "falseFix"
 
     * Change the order to the following: subject, age, gender, condition.
+      Hint: look at the arguments/documentation for DlgFromDict
 """
 
 """
