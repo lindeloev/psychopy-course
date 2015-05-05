@@ -6,6 +6,10 @@ This walks you through some common errors which messes timing up.
   3. put trigger/logging after win.flip() or sound.play()
   4. how to synchronize visual, audio and trigger
 
+The psychopy.org website contains a nice summary of fundamental information 
+concerning timing of stimuli and events, with particular emphasis on 
+visual timing. See http://www.psychopy.org/general/timing/timing.html#timing
+
 Jonas Kristoffer Lindeløv, 2014. Revised in 2015.
 """
 

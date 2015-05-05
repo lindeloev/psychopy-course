@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-How to synchronize to monitor frames with a functional win.flip() and without.
-On "good" computers with a 60Hz monitor, this script should result in two
-identical numbers close to 1.
+If your computer does not sync to vertical frames (show something strange in 
+demos --> timing --> timesByFrames.py), you can hack yourself out of it. 
+Here's the problem simulated and the fix. BEWARE that this will run fine 
+90% of the time you start it but the last 10% is in the danger zone of trying 
+to push frames at the exact update time of the monitor, thus causing a jitter 
+in actual onset latency.
 
 Jonas Kristoffer Lindeløv, 2014. Revised 2015.
 """

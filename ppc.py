@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Useful complements to psychopy.
+The ppc module (ppc is short for "PsychoPy Course) contain some useful 
+methods to help you build and verify your experiment. Put the ppc.py 
+in the same folder as your script or in your PYTHONPATH. See these 
+functions in use in the ppc3_template.py and in ppc2_timing.py.
+
 Jonas Lindeløv, 2014
 """
 
