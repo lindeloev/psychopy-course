@@ -1,6 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-PsychoPy keyboard input intro
+This is a small demo on using iohub to capture keyboard and mouse responses.
+psychopy.iohub can be used to replace psychopy.event
+
+psychopy.iohub is superior to psychopy.event in the following ways:
+ * Listen for input while the main python session is busy with stimuli.
+   This is good for timing!
+ * Listen for keyboard releases and currently pressed keys.
+ * Easily capture combinations of keys and the characters they return.
+
+NOTE: If you're running Mac OS, you may need to elevate psychoopy's permissions
+for iohub to work properly. Otherwise it will only capture moderator keys.
+Drag-drop psychopy into the Accessibility: http://kb.parallels.com/en/116418.
 
 Jonas Kristoffer Lindeløv, 2014. Revised 2015.
 """
