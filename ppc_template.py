@@ -181,10 +181,10 @@ def ask(text='', keyList=None):
     # Halt everything and wait for (first) responses matching the keys given in the Q object.
     if keyList:
         keyList += KEYS_QUIT
-    response = event.waitKeys(keyList=keyList, timeStamped=True)  # timestamped according to core.monotonicClock.getTime() at keypress
-    if response[0][0] in KEYS_QUIT:  # Look at first reponse [0]. Quit everything if quit-key was pressed
+    key, time_key = event.waitKeys(keyList=keyList, timeStamped=True)[0]  # timestamped according to core.monotonicClock.getTime() at keypress. Select the first and only answer.
+    if key in KEYS_QUIT:  # Look at first reponse [0]. Quit everything if quit-key was pressed
         core.quit()
-    return response[0][0], response[0][1] - time_flip  # When answer given, return it.
+    return key, time_key - time_flip  # When answer given, return it.
 
 
 def make_trial_list(condition):
