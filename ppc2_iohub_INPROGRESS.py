@@ -50,26 +50,23 @@ EXERCISE:
       Hint: dict.keys() and set(lista) == set(listb)
 """
 
-# Identical to doing this (although there is no hog duration here):
 io.wait(1)
 io.clearEvents('all')
 print 'listening now!'
-keep_listening = True
-while keep_listening:
-    events = keyboard.getEvents()
-    for event in events:
-        print event
-        if event.type == iohub.EventConstants.KEYBOARD_RELEASE:
-            keep_listening = False
+
+# iohub wait* methods above are identical to doing this, although they do 
+# it in a different process than the main python session:
+while True:
+    events = keyboard.getEvents(iohub.EventConstants.KEYBOARD_RELEASE)  # listening for releases
+    if events:  # if non-empty
+        break
+
 print 'finish'
 
 
 
 """
 TO DO:
+  * GETTING KEYBOARD RESPONSE DURING FLIP-LOOP.
+  * MOUSE STUFF
 """
-
-# GETTING KEYBOARD DURING RUNTIME
-
-# Waiting for mouse events
-mouse = io.devices.mouse
