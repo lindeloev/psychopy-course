@@ -6,6 +6,11 @@ in the same folder as your script or in your PYTHONPATH. See these
 functions in use in the ppc3_template.py and in ppc2_timing.py.
 
 Jonas Lindeløv, 2014
+
+TO DO:
+ * add UTC times in csvWriter?
+ * Remove sound or make it a dummy-one which drops back to psychopy
+ * Use PEP8 names instead of camelCase
 """
 
 class Sound(object):
@@ -66,8 +71,8 @@ def timer(script, setup='', timeScale=False, runs=False):
     unit = 's' if timeScale == 1 else 'ms' if timeScale == 10**-3 else 'us' if timeScale == 10**-6 else 'ns' if timeScale == 10**-9 else '*' + str(timeScale)
 
     # Print results
-    print '\n\'', script, '\''
-    print 'AVERAGE:', round(mean / timeScale, 3), unit, 'from', runs, 'runs'
+    print('\n\'', script, '\'')
+    print('AVERAGE:', round(mean / timeScale, 3), unit, 'from', runs, 'runs')
 
 
 def deg2cm(angle, distance):
@@ -110,14 +115,14 @@ class csvWriter(object):
                 os.makedirs(saveFolder)
 
         # Generate self.saveFile and self.writer
-        self.saveFile = saveFolder + str(saveFilePrefix) + ' (' + time.strftime('%Y-%m-%d %H-%M-%S', time.localtime()) +').csv'  # Filename for csv. E.g. "myFolder/subj1_cond2 (2013-12-28 09-53-04).csv"
-        self.writer = csv.writer(open(self.saveFile, 'wb'), delimiter=';').writerow  # The writer function to csv. It appends a single row to file
-        self.headerWritten = False
+        self.saveFile = saveFolder + str(saveFilePrefix) + ' (' + time.strftime('%Y-%m-%d %H-%M-%S', time.localtime()) +').tsv'  # Filename for csv. E.g. "myFolder/subj1_cond2 (2013-12-28 09-53-04).csv"
+        self.writer = csv.writer(open(self.saveFile, 'w'), delimiter='\t').writerow  # The writer function to csv. It appends a single row to file
+        self._headerWritten = False
 
     def write(self, trial):
         """:trial: a dictionary"""
-        if not self.headerWritten:
-            self.headerWritten = True
+        if not self._headerWritten:
+            self._headerWritten = True
             self.writer(trial.keys())
         self.writer(trial.values())
 
@@ -153,10 +158,10 @@ def getActualFrameRate(frames=1000):
 
     # Print summary
     import numpy as np
-    print 'average frame duration was', round(np.average(durations) * 1000, 3), 'ms (SD', round(np.std(durations), 5), ') ms'
-    print 'corresponding to a framerate of', round(1 / np.average(durations), 3), 'Hz'
-    print '60 frames on your monitor takes', round(np.average(durations) * 60 * 1000, 3), 'ms'
-    print 'shortest duration was ', round(min(durations) * 1000, 3), 'ms and longest duration was ', round(max(durations) * 1000, 3), 'ms'
+    print('average frame duration was', round(np.average(durations) * 1000, 3), 'ms (SD', round(np.std(durations), 5), ') ms')
+    print('corresponding to a framerate of', round(1 / np.average(durations), 3), 'Hz')
+    print('60 frames on your monitor takes', round(np.average(durations) * 60 * 1000, 3), 'ms')
+    print('shortest duration was ', round(min(durations) * 1000, 3), 'ms and longest duration was ', round(max(durations) * 1000, 3), 'ms')
 
 
 def dkl2rgb(dkl):
@@ -164,4 +169,3 @@ def dkl2rgb(dkl):
     from numpy import array
     from psychopy.misc import dkl2rgb
     return dkl2rgb(array(dkl))
-
