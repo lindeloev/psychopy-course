@@ -13,6 +13,11 @@ TO DO:
  * Use PEP8 names instead of camelCase
 """
 
+# Check python version
+import sys
+python3 = sys.version_info[0] == 3
+    
+
 class Sound(object):
     """
     A windows-only low-latency replacement for psychopy.sound.
@@ -116,7 +121,10 @@ class csvWriter(object):
 
         # Generate self.saveFile and self.writer
         self.saveFile = saveFolder + str(saveFilePrefix) + ' (' + time.strftime('%Y-%m-%d %H-%M-%S', time.localtime()) +').tsv'  # Filename for csv. E.g. "myFolder/subj1_cond2 (2013-12-28 09-53-04).csv"
-        self.writer = csv.writer(open(self.saveFile, 'w'), delimiter='\t').writerow  # The writer function to csv. It appends a single row to file
+        if python3:
+            self.writer = csv.writer(open(self.saveFile, 'w', newline=''), delimiter='\t').writerow  # The writer function to csv. It appends a single row to file
+        else:
+            self.writer = csv.writer(open(self.saveFile, 'wb'), delimiter='\t').writerow  # The writer function to csv. It appends a single row to file
         self._headerWritten = False
 
     def write(self, trial):
