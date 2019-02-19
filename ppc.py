@@ -16,7 +16,7 @@ TO DO:
 # Check python version
 import sys
 python3 = sys.version_info[0] == 3
-    
+
 
 class Sound(object):
     """
@@ -93,46 +93,86 @@ def deg2cm(angle, distance):
     return math.tan(math.radians(angle)) * distance  # trigonometry
 
 
-class csvWriter(object):
-    def __init__(self, saveFilePrefix='', saveFolder=''):
+class csv_writer(object):
+    def __init__(self, filename_prefix='', folder='', column_order=None):
         """
-        Creates a csv file and appends single rows to it using the csvWriter.write() function.
-        Use this function to save trials. Writing is very fast. Around a microsecond.
-
-        :saveFilePrefix: a string to prefix the file with
-        :saveFolder: (string/False) if False, uses same directory as the py file
-
-        So you'd do this::
-                # In the beginning of your script
-                writer = ppc.csvWriter('subject 1', 'dataFolder')
-
-                # In the trial-loop
-                trial = {'condition': 'fun', 'answer': 'left', 'rt': 0.224}  # your trial
-                writer.write(trial)
+        Take a dictionary and write it to a csv file as a row.
+        Writing is very fast - less than a microsecond.
+        
+        :filename_prefix: (str) would usually be the id of the participant
+        :folder: (str) optionally use/create a folder.
+        :column_order: (list) The columns to put first in the csv. Some or all.
+        
+        Use like:
+            
+            # Once towards the beginning of the script
+            writer = csv_writer('participant1', folder='data', column_order=['id', 'condition'])
+            
+            # After each trial is completed
+            trial = {'id': 'participant1', 'rt': 0.2323, 'condition': 'practice'}
+            writer.write(trial)
+            
+            # Optional: forces save of hitherto collected data to disk.
+            # writer.flush()
         """
-        import csv, time
-
+		import os
+		import time
+		
+        self.column_order = column_order
+        self._header_written = False
+        
         # Create folder if it doesn't exist
-        if saveFolder:
-            import os
-            saveFolder += '/'
-            if not os.path.isdir(saveFolder):
-                os.makedirs(saveFolder)
+        if folder:
+            folder += '/'
+            if not os.path.isdir(folder):
+                os.makedirs(folder)
 
         # Generate self.saveFile and self.writer
-        self.saveFile = saveFolder + str(saveFilePrefix) + ' (' + time.strftime('%Y-%m-%d %H-%M-%S', time.localtime()) +').tsv'  # Filename for csv. E.g. "myFolder/subj1_cond2 (2013-12-28 09-53-04).csv"
+        self.save_file = folder + str(filename_prefix) + ' (' + time.strftime('%Y-%m-%d %H-%M-%S', time.localtime()) +').csv'  # Filename for csv. E.g. "myFolder/subj1_cond2 (2013-12-28 09-53-04).csv"
+        self._setup_file()
+
+
+    def _setup_file(self):
+        """Setting up the self.writer depends on python version."""
+		import csv
+		
         if python3:
-            self.writer = csv.writer(open(self.saveFile, 'w', newline=''), delimiter='\t').writerow  # The writer function to csv. It appends a single row to file
+            self._file = open(self.save_file, 'a', newline='')
         else:
-            self.writer = csv.writer(open(self.saveFile, 'wb'), delimiter='\t').writerow  # The writer function to csv. It appends a single row to file
-        self._headerWritten = False
+            self._file = open(self.save_file, 'wb')
+
+        self.writer = csv.DictWriter(self._file, fieldnames=self.column_order)  # The writer function to csv. It appends a single row to file
 
     def write(self, trial):
-        """:trial: a dictionary"""
-        if not self._headerWritten:
-            self._headerWritten = True
-            self.writer(trial.keys())
-        self.writer(trial.values())
+        """Saves a trial to buffer. :trial: a dictionary"""
+        # Write header and add fieldnames on first trial
+        if self.writer.fieldnames is None:
+            self.writer.fieldnames = list(trial.keys())
+        
+        # Check that all column_order are present in the trial
+        if len(set(self.column_order) - set(list(trial.keys()))) != 0:
+                raise(ValueError('A column in column_order was not present in the trial dictionary'))
+        
+        # Enforce order on first columns. Then add the last in "random" order.
+        if len(trial) > len(self.column_order):
+            self.writer.fieldnames = self.column_order + list(set(list(trial.keys())) - set(self.column_order))
+
+        # Write header if it hasn't been            
+        if not self._header_written:
+            self.writer.writeheader()
+            self._header_written = True
+
+        # Now write data
+        self.writer.writerow(trial)  # Works both in python2 and python3
+
+    def flush(self):
+        """Saves current content to file. 
+        This will happen automatically when the script terminates.
+        Only do this if you fear a hard crash. It's mostly fast (< 1 ms) but can be slow (up to 30 ms)
+        """
+        self._file.close()
+        self._setup_file()
+
 
 def getActualFrameRate(frames=1000):
     """
