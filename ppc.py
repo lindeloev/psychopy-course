@@ -115,6 +115,7 @@ class csv_writer(object):
             # Optional: forces save of hitherto collected data to disk.
             # writer.flush()
         """
+
 		import os
 		import time
 		
@@ -127,8 +128,8 @@ class csv_writer(object):
             if not os.path.isdir(folder):
                 os.makedirs(folder)
 
-        # Generate self.saveFile and self.writer
-        self.save_file = folder + str(filename_prefix) + ' (' + time.strftime('%Y-%m-%d %H-%M-%S', time.localtime()) +').csv'  # Filename for csv. E.g. "myFolder/subj1_cond2 (2013-12-28 09-53-04).csv"
+        # Generate self.save_file and self.writer
+        self.save_file = '%s%s (%s).csv' %(folder, filename_prefix, time.strftime('%Y-%m-%d %H-%M-%S', time.localtime()))  # Filename for csv. E.g. "myFolder/subj1_cond2 (2013-12-28 09-53-04).csv"
         self._setup_file()
 
 
